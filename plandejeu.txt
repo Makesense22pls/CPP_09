@@ -1,0 +1,58 @@
+
+### Step 1: Read the file **line by line**
+
+* Open the file for reading.
+* For each line in the file:
+
+  * Think of each line as containing **two pieces of information**:
+
+    1. **The key** – e.g., a date or identifier.
+    2. **The value** – e.g., a number, price, or measurement.
+
+---
+
+### Step 2: Extract the key and value
+
+* Split the line into **key** and **value**.
+
+  * Usually, this is done by looking for a **delimiter** like a comma, space, or tab.
+* Convert the value from text to the appropriate type (e.g., `double` for numbers).
+
+---
+
+### Step 3: Insert into the map
+
+* Use the **key as the identifier** in the container.
+* Assign the **value** to this key.
+* The map will automatically handle **unique keys** and **keep the keys sorted**.
+
+---
+
+### Step 4: Repeat for every line
+
+* Every line in the file becomes **one entry in your map**.
+* If a key appears again, its value can be updated or ignored, depending on what you need.
+
+---
+
+### Conceptual Example
+
+Imagine your file looks like this:
+
+```
+2011-01-03, 10.5
+2011-01-09, 20.0
+2012-01-11, 5.25
+```
+
+* First line → key = `"2011-01-03"`, value = `10.5`
+* Second line → key = `"2011-01-09"`, value = `20.0`
+* Third line → key = `"2012-01-11"`, value = `5.25`
+
+After processing, the map contains **all lines as key-value pairs**, and the keys are **sorted automatically**.
+
+---
+
+If you want, I can draw a **diagram showing a file line transforming into a map entry**, which makes this really visual and easy to grasp.
+
+Do you want me to do that?
