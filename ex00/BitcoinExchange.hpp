@@ -13,8 +13,7 @@ int checking(char *argv);
 
 class Data{
 	private:
-		std::map<std::string, double> input_all;
-
+		std::multimap<std::string, double> data_csv_all;
 
 	public:
 		Data();
@@ -22,4 +21,7 @@ class Data{
 		Data &operator=(const Data &other);
 		~Data();
 		void extract_input_file(std::string *file);
+		void extract_data_csv();
+		bool parse(std::string date, double value);
+		double rate(std::string date);
 };
