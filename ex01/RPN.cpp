@@ -1,85 +1,74 @@
 #include "RPN.hpp"
+#include <cstring>
 
+RPN::RPN(const std::string &) : stack(){};
 
-
-//FORME CANONIQUE
-RPN::RPN(){};
 
 RPN::RPN(const RPN &other){
 	*this = other;
 };
 
 RPN &RPN::operator=(const RPN &other){
-	if (this != &other)
+
+	if ( this != &other )
 	{
 		this->stack = other.stack;
 	}
-	return *this;
+	return(*this);
 }
 
 RPN::~RPN(){};
 
-
-
 int checking(int argc, char *argv){
 	if (argc != 2)
-		return(std::cerr << "Error: wrong number of arguments" << std::endl, 1);
-	std::string copy(argv);
-	if (copy.empty())
-		return(std::cerr << "Error: empty input" << std::endl, 1);
-	return (0);
+		return (std::cerr << "Error: invalid number of arguments" << std::endl,1);
+	if (!argv || strlen(argv) == 0)
+		return (std::cerr << "Error: invalid argument" << std::endl,1);
+	return (0);	
 }
 
-void RPN::calcul(const std::string &input)
+void RPN::calcul(const std::string &arg)
 {
-	size_t i = 0;
-
-	while (i < input.length())
+	for (size_t i = 0; i < arg.length(); i++)
 	{
-		if (input[i] == ' ')
+		if (arg[i] == ' ' || arg[i] == '\t')
+			continue;
+		
+		if (std::isdigit(arg[i]))
 		{
-			i++;
-			continue ;
+			stack.push(arg[i] - '0');
 		}
-		char c = input[i];
-		if (c == '+' || c == '-' || c == '*' || c == '/')
+		else if (arg[i] == '+' || arg[i] == '-' || arg[i] == '*' || arg[i] == '/')
 		{
 			if (stack.size() < 2)
-			{
-				std::cerr << "Error" << std::endl;
-				return ;
-			}
-			double b = stack.top(); stack.pop();
-			double a = stack.top(); stack.pop();
-			if (c == '+')
+				throw std::runtime_error("Error: add operands");
+			
+			int b = stack.top();
+			stack.pop();
+			int a = stack.top();
+			stack.pop();
+			
+			if (arg[i] == '+')
 				stack.push(a + b);
-			else if (c == '-')
+			else if (arg[i] == '-')
 				stack.push(a - b);
-			else if (c == '*')
+			else if (arg[i] == '*')
 				stack.push(a * b);
-			else if (c == '/')
+			else if (arg[i] == '/')
 			{
 				if (b == 0)
-				{
-					std::cerr << "Error: division by zero" << std::endl;
-					return ;
-				}
+					throw std::runtime_error("Error: div by 0");
 				stack.push(a / b);
 			}
 		}
-		else if (c >= '0' && c <= '9')
-			stack.push(c - '0');
 		else
 		{
-			std::cerr << "Error" << std::endl;
-			return ;
+			throw std::runtime_error("Not a single digit less than 10");
 		}
-		i++;
 	}
+	
 	if (stack.size() != 1)
-	{
-		std::cerr << "Error" << std::endl;
-		return ;
-	}
+		throw std::runtime_error("Error: invalid expression");
+	
 	std::cout << stack.top() << std::endl;
 }

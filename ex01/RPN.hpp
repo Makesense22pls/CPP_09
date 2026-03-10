@@ -1,19 +1,18 @@
 #pragma once
 
+#include <stack>
 #include <iostream>
 #include <string>
-#include <stack>
+#include <stdexcept>
 
-int checking(int argc, char *argv);
+class RPN{
 
-class RPN {
 	private:
-		std::stack<double> stack;
-
-	public:
-		RPN();
+		std::stack<int> stack;
+	public :
+		RPN(const std::string &arg);
 		RPN(const RPN &other);
 		RPN &operator=(const RPN &other);
 		~RPN();
-		void calcul(const std::string &expression);
+		void calcul (const std::string &arg);
 };
