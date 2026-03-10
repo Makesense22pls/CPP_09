@@ -3,21 +3,16 @@
 #include <stack>
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 class RPN{
 
-	class NotDigit : public std::exception{
-		const char* what() const throw()
-		{
-			return ("Not a single digit less than 10");
-		}
-		};
 	private:
 		std::stack<int> stack;
 	public :
-		RPN();
+		RPN(const std::string &arg);
 		RPN(const RPN &other);
 		RPN &operator=(const RPN &other);
 		~RPN();
-		void polish (const std::string &arg);
+		void calcul (const std::string &arg);
 };

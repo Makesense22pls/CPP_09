@@ -1,6 +1,7 @@
 #include "RPN.hpp"
+#include <cstring>
 
-RPN::RPN(){};
+RPN::RPN(const std::string &) : stack(){};
 
 
 RPN::RPN(const RPN &other){
@@ -18,9 +19,15 @@ RPN &RPN::operator=(const RPN &other){
 
 RPN::~RPN(){};
 
+int checking(int argc, char *argv){
+	if (argc != 2)
+		return (std::cerr << "Error: invalid number of arguments" << std::endl,1);
+	if (!argv || strlen(argv) == 0)
+		return (std::cerr << "Error: invalid argument" << std::endl,1);
+	return (0);	
+}
 
-
-void RPN::polish(const std::string &arg)
+void RPN::calcul(const std::string &arg)
 {
 	for (size_t i = 0; i < arg.length(); i++)
 	{
@@ -34,7 +41,7 @@ void RPN::polish(const std::string &arg)
 		else if (arg[i] == '+' || arg[i] == '-' || arg[i] == '*' || arg[i] == '/')
 		{
 			if (stack.size() < 2)
-				throw std::runtime_error("Error: insufficient operands");
+				throw std::runtime_error("Error: add operands");
 			
 			int b = stack.top();
 			stack.pop();
@@ -50,13 +57,13 @@ void RPN::polish(const std::string &arg)
 			else if (arg[i] == '/')
 			{
 				if (b == 0)
-					throw std::runtime_error("Error: division by zero");
+					throw std::runtime_error("Error: div by 0");
 				stack.push(a / b);
 			}
 		}
 		else
 		{
-			throw NotDigit();
+			throw std::runtime_error("Not a single digit less than 10");
 		}
 	}
 	

@@ -1,27 +1,18 @@
 #include "RPN.hpp"
 
-<<<<<<< HEAD
+int checking(int argc, char *argv);
 
-
-int main (int ac, char **av)
+int main(int argc, char **argv)
 {
-	if (ac != 2)
-		return(std::cout << "Error: wrong number of arguments" << std::endl,1);
-	try{
-		RPN calcul;
-		calcul.polish(av[1]);
-	}catch(std::exception &e){
-		std::cout <<  e.what() << std::endl;
-=======
-int main(int argc, char **argv){
-
-	if (checking(argc, argv[1]) == 1)
-		return (1);
-	else
-	{
-		RPN rpn;
+	try {
+		if (checking(argc, argv[1]) == 1)
+			return (1);
+		RPN rpn(argv[1]);
 		rpn.calcul(argv[1]);
->>>>>>> refs/remotes/origin/main
+	}
+	catch (const std::exception &e)
+	{
+		return (std::cerr<< "Error :" << e.what()<< std::endl, 1);
 	}
 	return (0);
 }
