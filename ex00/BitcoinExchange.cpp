@@ -101,9 +101,15 @@ void Data::extract_input_file(std::string *file)
 
 bool Data::parse(std::string date, double value)
 {
+
 	int year = atoi(date.substr(0,4).c_str());
 	int month = atoi(date.substr(5,8).c_str());
 	int day = atoi(date.substr(8,10).c_str());
+
+	if(date[4] != '-' ||date[7] != '-'){
+		std::cerr << "Error: bad input => " << date <<  std::endl;
+		return(false);
+	}
 	if(value < 0){
 		std::cerr << "Error: not a positive number." << std::endl;
 		return(false);
@@ -116,24 +122,28 @@ bool Data::parse(std::string date, double value)
 		std::cerr << "Error: bad input => " << date <<  std::endl;
 		return(false);
 	}
-	if (month < 0 || month > 12){
+	if (month < 1 || month > 12){
 		std::cerr << "Error: bad input => " << date <<  std::endl;
 		return(false);
 	}
-	if (day < 0 || day > 31){
+	if (day < 1 || day > 31){
 		std::cerr << "Error: bad input => " << date <<  std::endl;
 		return(false);
 	}
-	if (month == 2){
-		if(day > 29){
-			std::cerr << "Error: bad input => " << date <<  std::endl;
-			return(false);
-		}
-		else if(year == 2012 || year == 2016 || year == 2020){
-			if (month == 2 && day > 28){
+	if (month == 2)
+	{
+		if(year == 2012 || year == 2016 || year == 2020)
+		{
+			if (day > 29)
+			{
 				std::cerr << "Error: bad input => " << date <<  std::endl;
 				return(false);
 			}
+		}
+		else if(day > 28)
+		{
+			std::cerr << "Error: bad input => " << date <<  std::endl;
+			return(false);
 		}
 	}
 	if ( month == 3 || month == 1 ||month == 5 || month == 7 || month == 9 || month == 11){
