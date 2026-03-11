@@ -1,5 +1,15 @@
 #include "PmergeMe.hpp"
 
+bool duplicatevalue(const std::vector<long> &values, long value)
+{
+	for (size_t i = 0; i < values.size(); i++)
+	{
+		if (values[i] == value)
+			return (true);
+	}
+	return (false);
+}
+
 //FORME CANONIQUE
 PmergeMe::PmergeMe(){};
 
@@ -20,6 +30,7 @@ PmergeMe::~PmergeMe(){};
 int checking(int argc, char **argv){
 	if (argc < 2)
 		return(std::cerr << "Error: not enough arguments" << std::endl, 1);
+	std::vector<long> values;
 	for (int i = 1; i < argc; i++)
 	{
 		std::string token(argv[i]);
@@ -35,6 +46,9 @@ int checking(int argc, char **argv){
 		ss >> n;
 		if (n <= 0)
 			return(std::cerr << "Error" << std::endl, 1);
+		if (duplicatevalue(values, n))
+			return(std::cerr << "Error: duplicate number" << std::endl, 1);
+		values.push_back(n);
 	}
 	return (0);
 }
